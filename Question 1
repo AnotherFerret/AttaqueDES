@@ -1,0 +1,27 @@
+Le principe de l'attaque par faute est d'injecter une erreur dans le système de chiffrement afin d'en perturber le fonctionnement et d'obtenir un chiffré en sortie différent du chiffré d'origine.
+Cette erreur notée "e" consiste à changer la valeur d'un bit. En comparant ainsi le chiffré d'origine et le chiffré faux, il est possible d'obtenir des informations sur la clé.
+
+Voici le schéma de l'attaque : 
+
+[schéma.png]
+
+Nous avons donc
+	C = R16 || R15 
+	  = L15+f(R15) || R15 
+	  
+	C' = R16+e' || R15+e 
+	   = L15 + f(R15+e) || R15+e
+	
+	d'ou
+		L15 + P(S(E(R15+e)+K16)) = R16 + e'
+		<=> P(S(E(R15+e)+K16)) = R16+L15+e'
+		<=> E(R15+e)+K16 = S^-1(P^-1(R16+l15+e'))
+		<=> K16 = S^-1(P^-1(R16+L15+e')) + E^-1(R15+e)
+		
+	Ici, on remarque qu'on connait toutes les valeurs sauf L15 et K16
+	Or, L15 étant dans la fonction P^-1 on peut le retrouver par une recherche exhaustive de clé sur 32 bits
+	Ce qui permet de retrouver K16
+	Ce qui permet de retrouver K
+	[élaborer sur K]
+	
+	
