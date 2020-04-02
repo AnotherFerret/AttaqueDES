@@ -19,9 +19,18 @@ Nous avons donc
 		<=> K16 = S^-1(P^-1(R16+L15+e')) + E^-1(R15+e)
 		
 	Ici, on remarque qu'on connait toutes les valeurs sauf L15 et K16
-	Or, L15 étant dans la fonction P^-1 on peut le retrouver par une recherche exhaustive de clé sur 32 bits
+	Or, L15 étant dans la fonction P^-1, il mesure 32 bits, on peut le retrouver par une recherche exhaustive sur 32 bits
+		->générer 2^32 candidats en faisant R16+L15+e' avec toutes les possibilités pour L15
+		->les passer dans P, puis S, puis additionner à E(R15+e)
+		->générer 2^32 clés candidates
+		->
 	Ce qui permet de retrouver K16
 	Ce qui permet de retrouver K
 	[élaborer sur K]
 	
 	
+	
+	clair :	1101111101010001100011001110110010111111011000011110001111011001
+	
+	vrai : 	1000011110001100111101101001001111001000011111101100000001111001
+	faux : 	1000010110011101111101101101011111001000011111111100000001111101
