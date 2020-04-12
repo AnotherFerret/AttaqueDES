@@ -5,30 +5,21 @@ Voici le schéma de l'attaque :
 
 [schéma.png]
 
-Nous avons donc
-	C = R16 || R15 
-	  = L15+f(R15) || R15 
-	  
-	C' = R16+e' || R15+e 
-	   = L15 + f(R15+e) || R15+e
 	
-	d'ou
-		L15 + P(S(E(R15+e)+K16)) = R16 + e'
-		<=> P(S(E(R15+e)+K16)) = R16+L15+e'
-		<=> E(R15+e)+K16 = S^-1(P^-1(R16+l15+e'))
-		<=> K16 = S^-1(P^-1(R16+L15+e')) + E^-1(R15+e)
-		
-	Ici, on remarque qu'on connait toutes les valeurs sauf L15 et K16
-	Or, L15 étant dans la fonction P^-1, il mesure 32 bits, on peut le retrouver par une recherche exhaustive sur 32 bits
-		->générer 2^32 candidats en faisant R16+L15+e' avec toutes les possibilités pour L15
-		->les passer dans P, puis S, puis additionner à E(R15+e)
-		->générer 2^32 clés candidates
-		->
-	Ce qui permet de retrouver K16
-	Ce qui permet de retrouver K
-	[élaborer sur K]
+	On applique la première permutation sur le chiffré
+	On sépare les deux parties du chiffré pour récupérer R16 et R16'
+	R16 xor R16' pour remonter la fonction f
+	appliquer p-1 sur le xor
 	
+	utiliser les sbox sur les bloc different de 0
 	
+	on obtient 4 solutions de 6 bits par sbox 
+	on fait la même chose avec les autres chiffré faux
+	
+	On compare et on garde que les points communs 
+	On devrait avoir 1 solution par sbox
+	On fait la solution xor E(R15) xor E(R15')
+	Et on obtient k16 ?
 	
 	clair :	1101111101010001100011001110110010111111011000011110001111011001
 	
