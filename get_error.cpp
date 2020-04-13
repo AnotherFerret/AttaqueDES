@@ -3,6 +3,8 @@
 #include <fstream>
 #include "sbox.h"
 #include "permute.h"
+#include "generate_56k.h"
+#include "DES.h"
 
 using namespace std; 
 
@@ -62,53 +64,6 @@ int exp_d[48] = { 32, 1, 2, 3, 4, 5, 4, 5,
 string expand1 = "";
 string expand2 = "";
 
-//candidate keys
-// [sbox][clés possibles][la clé]
-
-string candidate_keys[8][128][6];
-	
-	
-
-string xor_(string a, string b) 
-{ 
-    string ans = ""; 
-    for (unsigned int i = 0; i < a.size(); i++) { 
-        if (a[i] == b[i]) { 
-            ans += "0"; 
-        } 
-        else { 
-            ans += "1"; 
-        } 
-    } 
-    return ans; 
-} 
-
-string hex2bin(string s) 
-{ 
-    // hexadecimal to binary conversion 
-    unordered_map<char, string> mp; 
-    mp['0'] = "0000"; 
-    mp['1'] = "0001"; 
-    mp['2'] = "0010"; 
-    mp['3'] = "0011"; 
-    mp['4'] = "0100"; 
-    mp['5'] = "0101"; 
-    mp['6'] = "0110"; 
-    mp['7'] = "0111"; 
-    mp['8'] = "1000"; 
-    mp['9'] = "1001"; 
-    mp['A'] = "1010"; 
-    mp['B'] = "1011"; 
-    mp['C'] = "1100"; 
-    mp['D'] = "1101"; 
-    mp['E'] = "1110"; 
-    mp['F'] = "1111"; 
-    string bin = ""; 
-    for (unsigned int i = 0; i < s.size(); i++) { 
-        bin += mp[s[i]]; 
-    } 
-    return bin; 
-} 
  
 string get_diff_crypt(string pt, string pt2, string path) 
 { 
@@ -257,38 +212,48 @@ int solve_equation(string R15, string R15prime, string result, int box, string p
 	f.close();
 }
 
-
 int main(int argc, char** argv)
 {
-	string chiffre = "878CF693C87EC079";
-	string chiffre_error = argv[1];
-	string msg = "";
 	
-	string path = "/home/user/Bureau/AttaqueDES/output/" ;
-	path += argv[1];
-	path += ".txt";
-	ofstream f;
-	
-	//retourne R16+R16'
-	//remplit également les variables expand1 et expand2 correspondant à E(R15) et E(R15')
-	msg = get_diff_crypt(chiffre, chiffre_error, path);
-	
-	//Retourne P(R16+R16')
-	msg = permute(msg, per_inv, 32);
-	//cout << "permutation : " << msg << endl;
-	f.open(path, ios::app);
-	
-	for(int i = 0; i < 8; i++)
+	if(argv[1] != "")
 	{
-		f << "#" << i << "#" << endl;
-		f.close();
+		string chiffre = "878CF693C87EC079";
+		string chiffre_error = argv[1];
+		string msg = "";
 		
-		if(expand1.substr(i*6, 6) != expand2.substr(i*6, 6))
-		{
-			cout << "solving " << " R15 = " << expand1.substr(i*6, 6) << " R15' = " << expand2.substr(i*6, 6) << " target = " << msg.substr(i*4, 4) << " box = " << i << endl;
-			solve_equation(expand1.substr(i*6, 6), expand2.substr(i*6, 6), msg.substr(i*4, 4), i, path);
-		}
+		string path = "/home/user/Bureau/AttaqueDES/output/" ;
+		path += argv[1];
+		path += ".txt";
+		ofstream f;
+		
+		//retourne R16+R16'
+		//remplit également les variables expand1 et expand2 correspondant à E(R15) et E(R15')
+		msg = get_diff_crypt(chiffre, chiffre_error, path);
+		
+		//Retourne P(R16+R16')
+		msg = permute(msg, per_inv, 32);
+		//cout << "permutation : " << msg << endl;
 		f.open(path, ios::app);
+		
+		for(int i = 0; i < 8; i++)
+		{
+			f << "#" << i << "#" << endl;
+			f.close();
+			
+			if(expand1.substr(i*6, 6) != expand2.substr(i*6, 6))
+			{
+				cout << "solving " << " R15 = " << expand1.substr(i*6, 6) << " R15' = " << expand2.substr(i*6, 6) << " target = " << msg.substr(i*4, 4) << " box = " << i << endl;
+				solve_equation(expand1.substr(i*6, 6), expand2.substr(i*6, 6), msg.substr(i*4, 4), i, path);
+			}
+			f.open(path, ios::app);
+			
+			
+		}
+	}
+	else
+	{
+		
+		search_key64("010110001001001010001101000110000000010100011000", hex2bin("DF 51 8C EC BF 61 E3 D9"), hex2bin("87 8C F6 93 C8 7E C0 79 "));
 	}
 	return 0;
 }

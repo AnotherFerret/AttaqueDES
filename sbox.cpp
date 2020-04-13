@@ -1,4 +1,5 @@
 #include "sbox.h"
+#include "DES.h"
   
 int s2[8][4][16] = { { 14, 4, 13, 1, 2, 15, 11, 8, 3, 10, 6, 12, 5, 9, 0, 7, 
                           0, 15, 7, 4, 14, 2, 13, 1, 10, 6, 12, 11, 9, 5, 3, 8, 
@@ -33,37 +34,6 @@ int s2[8][4][16] = { { 14, 4, 13, 1, 2, 15, 11, 8, 3, 10, 6, 12, 5, 9, 0, 7,
                           7, 11, 4, 1, 9, 12, 14, 2, 0, 6, 10, 13, 15, 3, 5, 8, 
                           2, 1, 14, 7, 4, 10, 8, 13, 15, 12, 9, 0, 3, 5, 6, 11 } }; 
   
-string bin2hex(string s) 
-{ 
-    // binary to hexadecimal conversion 
-    unordered_map<string, string> mp; 
-    mp["0000"] = "0"; 
-    mp["0001"] = "1"; 
-    mp["0010"] = "2"; 
-    mp["0011"] = "3"; 
-    mp["0100"] = "4"; 
-    mp["0101"] = "5"; 
-    mp["0110"] = "6"; 
-    mp["0111"] = "7"; 
-    mp["1000"] = "8"; 
-    mp["1001"] = "9"; 
-    mp["1010"] = "A"; 
-    mp["1011"] = "B"; 
-    mp["1100"] = "C"; 
-    mp["1101"] = "D"; 
-    mp["1110"] = "E"; 
-    mp["1111"] = "F"; 
-    string hex = ""; 
-    for (unsigned int i = 0; i < s.length(); i += 4) { 
-        string ch = ""; 
-        ch += s[i]; 
-        ch += s[i + 1]; 
-        ch += s[i + 2]; 
-        ch += s[i + 3]; 
-        hex += mp[ch]; 
-    } 
-    return hex; 
-} 
 int bin2dec(string s)
 {
 	unordered_map<string, int> mp; 
@@ -136,13 +106,3 @@ string sbox(string x, int box)
 	}
 	return op;
 }
-
-/*int main()
-{
-	string msg = "00010001010010100000010000000000";
-	for(int i = 0; i < 8; i++)
-	{
-		cout << sbox(msg.substr(i*4, 4), i) << endl;
-	}
-	return 0;
-}*/
