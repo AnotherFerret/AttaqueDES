@@ -72,14 +72,12 @@ string ajout_bits_test(string key, int i)
 string search_key64(string key, string clair, string chiffre)
 {
 	//récupération de la clé avec 8 bits de parité et 8 bits à trouver. Ils sont initialisés à 0.
-	cout << "key : " << key << endl;
 	string key_56 = permute_bigger(permute_bigger(key, PC2inv, 56), PC1inv, 64);
-	cout << "key 56 : " << key_56 << endl;
 	
 	string key_56test = key_56;
 	string chiffre_test = "";
 	
-	cout << "cherche : " << chiffre << endl;
+	cout << "cherche le chiffré suivant : " << chiffre << endl;
 	//position des bits à trouver : 14, 15, 19, 20, 51, 54, 58, 60
 	for(int i = 0; i<256; i++)
 	{

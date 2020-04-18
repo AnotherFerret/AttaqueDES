@@ -279,10 +279,6 @@ string DES(string pt, string key)
 	//cout << "\nCipher Text: " << cipher << endl; 
 
 	return cipher;
-	
-	cout << "\nDecryption\n\n"; 
-	reverse(rkb.begin(), rkb.end()); 
-	reverse(rk.begin(), rk.end()); 
-	string text = encrypt(cipher, rkb, rk); 
-	cout << "\nPlain Text: " << text << endl; 
 } 
+
+//Chiffrement DES trouvé libre d'accès sur " https://www.geeksforgeeks.org/data-encryption-standard-des-set-1/ "

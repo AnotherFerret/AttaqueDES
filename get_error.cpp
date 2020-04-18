@@ -214,14 +214,14 @@ int solve_equation(string R15, string R15prime, string result, int box, string p
 
 int main(int argc, char** argv)
 {
-	
-	if(argv[1] != "")
+	string test = argv[1];
+	if(test.length() < 48)
 	{
-		string chiffre = "878CF693C87EC079";
+		string chiffre = argv[2];
 		string chiffre_error = argv[1];
 		string msg = "";
 		
-		string path = "/home/user/Bureau/AttaqueDES/output/" ;
+		string path = "./output/" ;
 		path += argv[1];
 		path += ".txt";
 		ofstream f;
@@ -250,10 +250,10 @@ int main(int argc, char** argv)
 			
 		}
 	}
-	else
+	else if(test.length() == 48)
 	{
-		
-		search_key64("010110001001001010001101000110000000010100011000", hex2bin("DF 51 8C EC BF 61 E3 D9"), hex2bin("87 8C F6 93 C8 7E C0 79 "));
+		//clé 48b, message clé, message chiffré
+		search_key64(argv[1], hex2bin(argv[2]), hex2bin(argv[3]));
 	}
 	return 0;
 }

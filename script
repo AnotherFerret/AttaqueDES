@@ -1,5 +1,5 @@
 input="chiffres"
 while IFS= read -r line
 do
-  ./a.out "$line"
+  ./a.out "$line" "878CF693C87EC079"
 done < "$input"
