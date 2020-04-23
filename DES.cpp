@@ -281,4 +281,4 @@ string DES(string pt, string key)
 	return cipher;
 } 
 
-//Chiffrement DES trouvé libre d'accès sur " https://www.geeksforgeeks.org/data-encryption-standard-des-set-1/ "
+//Chiffrement DES trouvé en open source sur " https://www.geeksforgeeks.org/data-encryption-standard-des-set-1/ "
